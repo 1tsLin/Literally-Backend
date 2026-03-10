@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+
+  sql:
+    init:
+      platform: postgres
+      mode: always
+
+  flyway:
+    enabled: true
+    schemas: public
+
+server:
+  port: 8080
