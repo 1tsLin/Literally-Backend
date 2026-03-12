@@ -10,6 +10,7 @@ import java.util.*;
 
 @Getter
 @Setter
+@Builder
 public class SeriesDTO {
     private UUID id;
 

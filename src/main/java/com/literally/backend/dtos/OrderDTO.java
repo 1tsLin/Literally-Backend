@@ -7,6 +7,7 @@ import java.util.*;
 
 @Getter
 @Setter
+@Builder
 public class OrderDTO {
     private UUID id;
 

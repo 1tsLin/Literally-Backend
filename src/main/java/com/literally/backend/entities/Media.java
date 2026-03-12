@@ -6,10 +6,13 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "medias")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Media {
 
     @Id

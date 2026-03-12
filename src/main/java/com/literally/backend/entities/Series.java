@@ -8,10 +8,13 @@ import lombok.*;
 
 import java.util.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "series")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Series {
 
     @Id

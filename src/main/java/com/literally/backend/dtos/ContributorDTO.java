@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 public class ContributorDTO {
     private UUID id;
     private ContributorCategoryEnum category;

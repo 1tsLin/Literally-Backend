@@ -7,6 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 public class SeriesLocalizationDTO {
     private UUID id;
     private SeriesDTO series;

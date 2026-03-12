@@ -8,10 +8,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 public class ProductLocalizationDTO {
     private UUID id;
 
-    private Product product;
+    private ProductDTO product;
     private LanguageEnum language;
 
     private String name;

@@ -8,6 +8,7 @@ import java.util.*;
 
 @Getter
 @Setter
+@Builder
 public class UserDTO {
     private UUID id;
 

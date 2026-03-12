@@ -6,10 +6,13 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "series_localizations")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SeriesLocalization {
 
     @Id

@@ -2,15 +2,17 @@ package com.literally.backend.entities;
 
 import com.literally.backend.entities.composite_keys.OrderItemKey;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "order_items")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItem {
 
     @EmbeddedId

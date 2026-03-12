@@ -4,10 +4,13 @@ import com.literally.backend.entities.composite_keys.CartItemKey;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "cart_items")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItem {
 
     @EmbeddedId

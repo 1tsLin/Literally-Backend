@@ -12,10 +12,11 @@ import java.util.*;
 
 @Getter
 @Setter
+@Builder
 public class ProductDTO {
     private UUID id;
 
-    private Series series;
+    private SeriesDTO series;
     private List<String> alias = new ArrayList<>();
     private BookFormatEnum format;
     private BookAudienceEnum audience;

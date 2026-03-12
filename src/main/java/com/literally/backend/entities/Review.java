@@ -6,10 +6,13 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "reviews")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
 
     @Id
