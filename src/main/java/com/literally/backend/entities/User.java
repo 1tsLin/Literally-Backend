@@ -38,7 +38,6 @@ public class User {
 
     private Boolean isAdmin;
 
-
     @ManyToMany
     @JoinTable(
             name = "favorites",

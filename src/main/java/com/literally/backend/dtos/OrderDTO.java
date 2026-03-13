@@ -12,7 +12,7 @@ public class OrderDTO {
     private UUID id;
 
     private OrderStatusEnum status;
-    private UserDTO user;
+    private UUID userId;
 
     private Date creationDate;
     private Date updateDate;
