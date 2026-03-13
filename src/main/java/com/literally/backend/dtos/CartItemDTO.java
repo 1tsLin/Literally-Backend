@@ -1,6 +1,8 @@
 package com.literally.backend.dtos;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -11,7 +13,7 @@ public class CartItemDTO {
 
     private UUID userId;
 
-    private ProductDTO product;
+    private UUID productId;
 
     private Integer quantity;
 }

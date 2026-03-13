@@ -1,10 +1,14 @@
 package com.literally.backend.dtos;
 
+import com.literally.backend.entities.composite_keys.CartItemKey;
 import com.literally.backend.enums.CurrencyEnum;
 import com.literally.backend.enums.LanguageEnum;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.*;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,8 +27,8 @@ public class UserDTO {
     private String password;
     private Boolean isAdmin;
 
-    private Set<ProductDTO> favorites;
-    private Set<OrderDTO> orders;
-    private Set<CartItemDTO> cart;
-    private Set<ReviewDTO> reviews;
+    private Set<UUID> favoriteIds;
+    private Set<UUID> orderIds;
+    private Set<CartItemKey> cartIds;
+    private Set<UUID> reviewIds;
 }

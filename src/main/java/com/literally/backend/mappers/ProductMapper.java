@@ -2,18 +2,21 @@ package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.entities.Product;
+import com.literally.backend.entities.Review;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class ProductMapper {
 
     private final SeriesMapper seriesMapper;
-    private final ReviewMapper reviewMapper;
+    private final ContributorMapper contributorMapper;
 
-    public ProductDTO mapToDto(Product entity){
+    public ProductDTO mapToDto(Product entity) {
         return ProductDTO.builder()
                 .id(entity.getId())
 
@@ -27,9 +30,9 @@ public class ProductMapper {
                 .quantity(entity.getQuantity())
                 .sales(entity.getSales())
 
-                .author(entity.getAuthor())
-                .editor(entity.getEditor())
-                .illustrator(entity.getIllustrator())
+                .author(contributorMapper.mapToDto(entity.getAuthor()))
+                .editor(contributorMapper.mapToDto(entity.getEditor()))
+                .illustrator(contributorMapper.mapToDto(entity.getIllustrator()))
 
                 .ean(entity.getEan())
                 .pages(entity.getPages())
@@ -40,18 +43,15 @@ public class ProductMapper {
                 .thickness(entity.getThickness())
                 .weight(entity.getWeight())
 
-                .reviews(entity.getReviews().stream()
-                        .map(reviewMapper::mapToDto)
+                .reviewIds(entity.getReviews().stream()
+                        .map(Review::getId)
                         .collect(Collectors.toSet()))
 
-                .isActive(entity.getIsActive())
                 .build();
     }
 
-    public Product mapToEntity(ProductDTO dto){
+    public Product mapToEntity(ProductDTO dto) {
         return Product.builder()
-                .id(dto.getId())
-
                 .series(seriesMapper.mapToEntity(dto.getSeries()))
                 .alias(new ArrayList<>(dto.getAlias()))
                 .format(dto.getFormat())
@@ -62,9 +62,9 @@ public class ProductMapper {
                 .quantity(dto.getQuantity())
                 .sales(dto.getSales())
 
-                .author(dto.getAuthor())
-                .editor(dto.getEditor())
-                .illustrator(dto.getIllustrator())
+                .author(contributorMapper.mapToEntity(dto.getAuthor()))
+                .editor(contributorMapper.mapToEntity(dto.getEditor()))
+                .illustrator(contributorMapper.mapToEntity(dto.getIllustrator()))
 
                 .ean(dto.getEan())
                 .pages(dto.getPages())
@@ -75,11 +75,6 @@ public class ProductMapper {
                 .thickness(dto.getThickness())
                 .weight(dto.getWeight())
 
-                .reviews(dto.getReviews().stream()
-                        .map(reviewMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
-
-                .isActive(dto.getIsActive())
                 .build();
     }
 }

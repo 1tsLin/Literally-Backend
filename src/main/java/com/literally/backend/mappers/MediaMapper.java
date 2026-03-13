@@ -2,7 +2,9 @@ package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.MediaDTO;
 import com.literally.backend.entities.Media;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MediaMapper {
 
     public MediaDTO mapToDto(Media entity){
@@ -16,7 +18,6 @@ public class MediaMapper {
 
     public Media mapToEntity(MediaDTO dto){
         return Media.builder()
-                .id(dto.getId())
                 .entityId(dto.getEntityId())
                 .entityType(dto.getEntityType())
                 .data(dto.getData())

@@ -1,20 +1,17 @@
 package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.UserDTO;
-import com.literally.backend.entities.User;
+import com.literally.backend.entities.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class UserMapper {
 
-    private final ProductMapper productMapper;
-    private final OrderMapper orderMapper;
-    private final CartItemMapper cartItemMapper;
-    private final ReviewMapper reviewMapper;
-
-    public UserDTO mapToDto(User entity){
+    public UserDTO mapToDto(User entity) {
         return UserDTO.builder()
                 .id(entity.getId())
 
@@ -29,26 +26,24 @@ public class UserMapper {
                 .password(entity.getPassword())
                 .isAdmin(entity.getIsAdmin())
 
-                .favorites(entity.getFavorites().stream()
-                        .map(productMapper::mapToDto)
+                .favoriteIds(entity.getFavorites().stream()
+                        .map(Product::getId)
                         .collect(Collectors.toSet()))
-                .orders(entity.getOrders().stream()
-                        .map(orderMapper::mapToDto)
+                .orderIds(entity.getOrders().stream()
+                        .map(Order::getId)
                         .collect(Collectors.toSet()))
-                .cart(entity.getCart().stream()
-                        .map(cartItemMapper::mapToDto)
+                .cartIds(entity.getCart().stream()
+                        .map(CartItem::getId)
                         .collect(Collectors.toSet()))
-                .reviews(entity.getReviews().stream()
-                        .map(reviewMapper::mapToDto)
+                .reviewIds(entity.getReviews().stream()
+                        .map(Review::getId)
                         .collect(Collectors.toSet()))
 
                 .build();
     }
 
-    public User mapToEntity(UserDTO dto){
+    public User mapToEntity(UserDTO dto) {
         return User.builder()
-                .id(dto.getId())
-
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .address(dto.getAddress())
@@ -59,19 +54,6 @@ public class UserMapper {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .isAdmin(dto.getIsAdmin())
-
-                .favorites(dto.getFavorites().stream()
-                        .map(productMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
-                .orders(dto.getOrders().stream()
-                        .map(orderMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
-                .cart(dto.getCart().stream()
-                        .map(cartItemMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
-                .reviews(dto.getReviews().stream()
-                        .map(reviewMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
 
                 .build();
     }

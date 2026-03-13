@@ -7,16 +7,18 @@ import com.literally.backend.entities.User;
 import com.literally.backend.services.ProductService;
 import com.literally.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 @RequiredArgsConstructor
 public class ReviewMapper {
 
     private final UserService userService;
     private final ProductService productService;
 
-    public ReviewDTO mapToDto(Review entity){
+    public ReviewDTO mapToDto(Review entity) {
         UUID userId = entity.getUser() != null ? entity.getUser().getId() : null;
         UUID productId = entity.getProduct() != null ? entity.getProduct().getId() : null;
 
@@ -35,13 +37,11 @@ public class ReviewMapper {
                 .build();
     }
 
-    public Review mapToEntity(ReviewDTO dto){
-        User user = dto.getUserId() != null ? userService.getById(dto.getUserId()) : null;
-        Product product = dto.getProductId() != null ? productService.getById(dto.getProductId()) : null;
+    public Review mapToEntity(ReviewDTO dto) {
+        User user = dto.getUserId() != null ? userService.getUserById(dto.getUserId()) : null;
+        Product product = dto.getProductId() != null ? productService.getProductById(dto.getProductId()) : null;
 
         return Review.builder()
-                .id(dto.getId())
-
                 .user(user)
                 .product(product)
 

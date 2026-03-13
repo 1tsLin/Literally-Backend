@@ -1,9 +1,14 @@
 package com.literally.backend.dtos;
 
+import com.literally.backend.entities.composite_keys.OrderItemKey;
 import com.literally.backend.enums.OrderStatusEnum;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,5 +22,5 @@ public class OrderDTO {
     private Date creationDate;
     private Date updateDate;
 
-    private Set<OrderItemDTO> items;
+    private Set<OrderItemKey> itemIds;
 }
