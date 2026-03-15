@@ -42,6 +42,18 @@ public class OrderController {
                                                    Order Cancellation
     ------------------------------------------------------------------------------------------------------------------*/
 
-    // TODO : Add Order Cancellation
+    @PostMapping("/{orderId}")
+    public OrderDTO cancelOrder(@PathVariable UUID orderId) {
+        return orderService.cancellation(orderId);
+    }
+
+    /*------------------------------------------------------------------------------------------------------------------
+                                                      Cart checkout
+    ------------------------------------------------------------------------------------------------------------------*/
+
+    @PostMapping("/{userId}")
+    public OrderDTO checkout(@PathVariable UUID userId) {
+        return orderService.checkout(userId);
+    }
 
 }

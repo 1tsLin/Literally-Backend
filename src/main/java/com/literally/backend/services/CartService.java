@@ -64,7 +64,11 @@ public class CartService {
     }
 
     /*------------------------------------------------------------------------------------------------------------------
-                                                       Cart Checkout
+                                                       Cart clear
     ------------------------------------------------------------------------------------------------------------------*/
 
+    @Transactional
+    public void clearCart(Set<CartItemDTO> cart) {
+        cart.forEach(item -> delete(item.getUserId(), item.getProductId()));
+    }
 }

@@ -2,7 +2,6 @@ package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.OrderDTO;
 import com.literally.backend.entities.Order;
-import com.literally.backend.entities.OrderItem;
 import com.literally.backend.entities.User;
 import com.literally.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 public class OrderMapper {
 
     private final UserService userService;
+    private final OrderItemMapper orderItemMapper;
 
     public OrderDTO mapToDto(Order entity) {
         UUID userId = entity.getUser() != null ? entity.getUser().getId() : null;
@@ -26,8 +26,8 @@ public class OrderMapper {
                 .userId(userId)
                 .creationDate(entity.getCreationDate())
                 .updateDate(entity.getUpdateDate())
-                .itemIds(entity.getItems().stream()
-                        .map(OrderItem::getId)
+                .items(entity.getItems().stream()
+                        .map(orderItemMapper::mapToDto)
                         .collect(Collectors.toSet()))
                 .build();
     }

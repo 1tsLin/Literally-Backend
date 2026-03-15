@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "reviews")
@@ -32,9 +33,9 @@ public class Review {
 
     private String comment;
 
-    private Date creationDate;
+    private Instant creationDate;
 
-    private Date updateDate;
+    private Instant updateDate;
 
 }
 

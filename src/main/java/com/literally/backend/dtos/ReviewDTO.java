@@ -1,9 +1,11 @@
 package com.literally.backend.dtos;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
@@ -18,6 +20,6 @@ public class ReviewDTO {
     private BigDecimal grade;
     private String comment;
 
-    private Date creationDate;
-    private Date updateDate;
+    private Instant creationDate;
+    private Instant updateDate;
 }
