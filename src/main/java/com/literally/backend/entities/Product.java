@@ -74,8 +74,6 @@ public class Product {
     @Column(precision = 5, scale = 3)
     private BigDecimal weight;
 
-    private Boolean isActive;
-
     @OneToMany(mappedBy = "product")
     private Set<Review> reviews = new HashSet<>();
 

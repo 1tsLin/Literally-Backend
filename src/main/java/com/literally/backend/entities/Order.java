@@ -4,7 +4,10 @@ import com.literally.backend.enums.OrderStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.*;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -26,9 +29,9 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Date creationDate;
+    private Instant creationDate;
 
-    private Date updateDate;
+    private Instant updateDate;
 
     @OneToMany(mappedBy = "order")
     private Set<OrderItem> items = new HashSet<>();

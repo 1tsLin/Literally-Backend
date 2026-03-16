@@ -1,9 +1,13 @@
 package com.literally.backend.dtos;
 
 import com.literally.backend.enums.OrderStatusEnum;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.*;
+import java.time.Instant;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,8 +18,8 @@ public class OrderDTO {
     private OrderStatusEnum status;
     private UUID userId;
 
-    private Date creationDate;
-    private Date updateDate;
+    private Instant creationDate;
+    private Instant updateDate;
 
     private Set<OrderItemDTO> items;
 }

@@ -5,17 +5,19 @@ import com.literally.backend.entities.Order;
 import com.literally.backend.entities.User;
 import com.literally.backend.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Component
 @RequiredArgsConstructor
 public class OrderMapper {
 
-    private final OrderItemMapper orderItemMapper;
     private final UserService userService;
+    private final OrderItemMapper orderItemMapper;
 
-    public OrderDTO mapToDto(Order entity){
+    public OrderDTO mapToDto(Order entity) {
         UUID userId = entity.getUser() != null ? entity.getUser().getId() : null;
 
         return OrderDTO.builder()
@@ -30,18 +32,14 @@ public class OrderMapper {
                 .build();
     }
 
-    public Order mapToEntity(OrderDTO dto){
-        User user = dto.getUserId() != null ? userService.getById(dto.getUserId()) : null;
+    public Order mapToEntity(OrderDTO dto) {
+        User user = dto.getUserId() != null ? userService.getUserById(dto.getUserId()) : null;
 
         return Order.builder()
-                .id(dto.getId())
                 .status(dto.getStatus())
                 .user(user)
                 .creationDate(dto.getCreationDate())
                 .updateDate(dto.getUpdateDate())
-                .items(dto.getItems().stream()
-                        .map(orderItemMapper::mapToEntity)
-                        .collect(Collectors.toSet()))
                 .build();
     }
 }

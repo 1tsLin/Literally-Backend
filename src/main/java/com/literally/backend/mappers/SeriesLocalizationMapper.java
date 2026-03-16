@@ -3,7 +3,9 @@ package com.literally.backend.mappers;
 import com.literally.backend.dtos.SeriesLocalizationDTO;
 import com.literally.backend.entities.SeriesLocalization;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class SeriesLocalizationMapper {
 
@@ -19,9 +21,8 @@ public class SeriesLocalizationMapper {
                 .build();
     }
 
-    public SeriesLocalization mapToDto(SeriesLocalizationDTO dto){
+    public SeriesLocalization mapToEntity(SeriesLocalizationDTO dto){
         return SeriesLocalization.builder()
-                .id(dto.getId())
                 .series(seriesMapper.mapToEntity(dto.getSeries()))
                 .language(dto.getLanguage())
                 .name(dto.getName())

@@ -1,8 +1,9 @@
 package com.literally.backend.dtos;
 
-import com.literally.backend.entities.Product;
 import com.literally.backend.enums.LanguageEnum;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -17,5 +18,7 @@ public class ProductLocalizationDTO {
 
     private String name;
     private String description;
+
+    private Boolean isActive;
 }
 

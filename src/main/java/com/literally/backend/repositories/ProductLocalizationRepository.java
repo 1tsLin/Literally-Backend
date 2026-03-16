@@ -1,6 +1,7 @@
 package com.literally.backend.repositories;
 
 import com.literally.backend.entities.ProductLocalization;
+import com.literally.backend.enums.LanguageEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,4 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface ProductLocalizationRepository extends JpaRepository<ProductLocalization, UUID> {
+
+    ProductLocalization findByProductIdAndLanguage(UUID productId, LanguageEnum language);
 }

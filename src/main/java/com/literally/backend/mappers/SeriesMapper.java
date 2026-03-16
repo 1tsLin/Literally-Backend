@@ -2,9 +2,11 @@ package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.SeriesDTO;
 import com.literally.backend.entities.Series;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Component
 public class SeriesMapper {
 
     public SeriesDTO mapToDto(Series entity){
@@ -25,8 +27,6 @@ public class SeriesMapper {
 
     public Series mapToEntity(SeriesDTO dto){
         return Series.builder()
-                .id(dto.getId())
-
                 .alias(new ArrayList<>(dto.getAlias()))
                 .format(dto.getFormat())
                 .audience(dto.getAudience())
