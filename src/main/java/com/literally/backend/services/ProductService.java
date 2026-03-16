@@ -1,5 +1,6 @@
 package com.literally.backend.services;
 
+import com.literally.backend.dtos.ProductCatalogDTO;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.entities.Product;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -114,4 +116,15 @@ public class ProductService {
         return productLocalizationMapper.mapToDto(localization);
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+                                              Product localization CRUD operations
+    ------------------------------------------------------------------------------------------------------------------*/
+
+    public List<ProductCatalogDTO> getCatalogByLanguage(LanguageEnum language) {
+        if (language == null)
+            throw new IllegalArgumentException("Language is null while fetching catalog");
+
+        // TODO : Add catalog filters
+        return productLocalizationRepository.findCatalogByLanguage(language);
+    }
 }
