@@ -1,5 +1,6 @@
 package com.literally.backend.controllers;
 
+import com.literally.backend.dtos.ProductCatalogDTO;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.enums.LanguageEnum;
@@ -7,6 +8,7 @@ import com.literally.backend.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -15,6 +17,15 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+
+    /*------------------------------------------------------------------------------------------------------------------
+                                                   Get catalog products
+    ------------------------------------------------------------------------------------------------------------------*/
+
+    @GetMapping()
+    public List<ProductCatalogDTO> getCatalog(@RequestParam("language") LanguageEnum language) {
+        return productService.getCatalogByLanguage(language);
+    }
 
     /*------------------------------------------------------------------------------------------------------------------
                                                  Product CRUD operations
