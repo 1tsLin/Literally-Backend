@@ -1,10 +1,12 @@
 package com.literally.backend.controllers;
 
 import com.literally.backend.dtos.ContributorDTO;
+import com.literally.backend.filters.ContributorFilter;
 import com.literally.backend.services.ContributorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +23,11 @@ public class ContributorController {
     @GetMapping("/{contributorId}")
     public ContributorDTO getContributor(@PathVariable UUID contributorId) {
         return contributorService.getById(contributorId);
+    }
+
+    @GetMapping
+    public List<ContributorDTO> getContributors(ContributorFilter filter) {
+        return contributorService.getContributors(filter);
     }
 
     @PostMapping

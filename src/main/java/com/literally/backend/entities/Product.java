@@ -11,8 +11,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "products")
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -76,6 +75,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductLocalization> localizations = new ArrayList<>();
 
     /*
     @OneToMany(mappedBy = "product")

@@ -3,16 +3,15 @@ package com.literally.backend.dtos;
 import com.literally.backend.enums.BookAudienceEnum;
 import com.literally.backend.enums.BookFormatEnum;
 import com.literally.backend.enums.BookGenreEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.*;
 
-@Getter
-@Setter
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDTO {
     private UUID id;
 
@@ -26,9 +25,9 @@ public class ProductDTO {
     private Integer quantity;
     private Integer sales;
 
-    private ContributorDTO author;
-    private ContributorDTO editor;
-    private ContributorDTO illustrator;
+    private UUID authorId;
+    private UUID editorId;
+    private UUID illustratorId;
 
     private Integer ean;
     private Integer pages;
@@ -40,4 +39,6 @@ public class ProductDTO {
     private BigDecimal weight;
 
     private Set<UUID> reviewIds;
+
+    private List<ProductLocalizationDTO> localizations;
 }

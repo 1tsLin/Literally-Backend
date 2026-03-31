@@ -12,7 +12,7 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database: postgresql
 
   sql:
@@ -26,3 +26,7 @@ spring:
 
 server:
   port: 8080
+
+app:
+  cors:
+    allowed-origins: http://localhost:4200

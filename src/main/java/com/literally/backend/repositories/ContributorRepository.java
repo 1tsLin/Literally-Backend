@@ -1,11 +1,16 @@
 package com.literally.backend.repositories;
 
 import com.literally.backend.entities.Contributor;
+import com.literally.backend.enums.ContributorCategoryEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ContributorRepository extends JpaRepository<Contributor, UUID> {
+public interface ContributorRepository extends JpaRepository<Contributor, UUID>,
+        JpaSpecificationExecutor<Contributor> {
+    Optional<Contributor> findByIdAndCategory(UUID Id, ContributorCategoryEnum category);
 }

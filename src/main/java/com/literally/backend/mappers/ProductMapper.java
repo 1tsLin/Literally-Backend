@@ -1,8 +1,11 @@
 package com.literally.backend.mappers;
 
 import com.literally.backend.dtos.ProductDTO;
+import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.entities.Product;
 import com.literally.backend.entities.Review;
+import com.literally.backend.enums.ContributorCategoryEnum;
+import com.literally.backend.services.ContributorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,7 @@ public class ProductMapper {
 
     private final SeriesMapper seriesMapper;
     private final ContributorMapper contributorMapper;
+    private final ContributorService contributorService;
 
     public ProductDTO mapToDto(Product entity) {
         return ProductDTO.builder()
@@ -30,9 +34,9 @@ public class ProductMapper {
                 .quantity(entity.getQuantity())
                 .sales(entity.getSales())
 
-                .author(contributorMapper.mapToDto(entity.getAuthor()))
-                .editor(contributorMapper.mapToDto(entity.getEditor()))
-                .illustrator(contributorMapper.mapToDto(entity.getIllustrator()))
+                .authorId(entity.getAuthor().getId())
+                .editorId(entity.getEditor().getId())
+                .illustratorId(entity.getIllustrator().getId())
 
                 .ean(entity.getEan())
                 .pages(entity.getPages())
@@ -62,9 +66,9 @@ public class ProductMapper {
                 .quantity(dto.getQuantity())
                 .sales(dto.getSales())
 
-                .author(contributorMapper.mapToEntity(dto.getAuthor()))
-                .editor(contributorMapper.mapToEntity(dto.getEditor()))
-                .illustrator(contributorMapper.mapToEntity(dto.getIllustrator()))
+                .author(contributorMapper.mapToEntity(contributorService.getByIdAndCategory(dto.getAuthorId(), ContributorCategoryEnum.AUTHOR)))
+                .editor(contributorMapper.mapToEntity(contributorService.getByIdAndCategory(dto.getEditorId(), ContributorCategoryEnum.EDITOR)))
+                .illustrator(contributorMapper.mapToEntity(contributorService.getByIdAndCategory(dto.getIllustratorId(), ContributorCategoryEnum.ILLUSTRATOR)))
 
                 .ean(dto.getEan())
                 .pages(dto.getPages())

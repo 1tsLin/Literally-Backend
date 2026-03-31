@@ -3,16 +3,15 @@ package com.literally.backend.dtos;
 import com.literally.backend.entities.composite_keys.CartItemKey;
 import com.literally.backend.enums.CurrencyEnum;
 import com.literally.backend.enums.LanguageEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
     private UUID id;
 

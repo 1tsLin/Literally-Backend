@@ -8,8 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "series_localizations")
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SeriesLocalizationMapper {
 
-    private final SeriesMapper seriesMapper;
-
     public SeriesLocalizationDTO mapToDto(SeriesLocalization entity){
         return SeriesLocalizationDTO.builder()
                 .id(entity.getId())
-                .series(seriesMapper.mapToDto(entity.getSeries()))
+                .seriesId(entity.getSeries().getId())
                 .language(entity.getLanguage())
                 .name(entity.getName())
                 .description(entity.getDescription())
@@ -23,7 +21,6 @@ public class SeriesLocalizationMapper {
 
     public SeriesLocalization mapToEntity(SeriesLocalizationDTO dto){
         return SeriesLocalization.builder()
-                .series(seriesMapper.mapToEntity(dto.getSeries()))
                 .language(dto.getLanguage())
                 .name(dto.getName())
                 .description(dto.getDescription())

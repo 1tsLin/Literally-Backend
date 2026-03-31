@@ -3,9 +3,11 @@ package com.literally.backend.services;
 import com.literally.backend.dtos.ProductCatalogDTO;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
+import com.literally.backend.entities.Media;
 import com.literally.backend.entities.Product;
 import com.literally.backend.entities.ProductLocalization;
 import com.literally.backend.enums.LanguageEnum;
+import com.literally.backend.enums.MediaCategoryEnum;
 import com.literally.backend.mappers.ProductLocalizationMapper;
 import com.literally.backend.mappers.ProductMapper;
 import com.literally.backend.repositories.ProductLocalizationRepository;
@@ -13,6 +15,7 @@ import com.literally.backend.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +28,7 @@ public class ProductService {
     private final ProductLocalizationRepository productLocalizationRepository;
     private final ProductMapper productMapper;
     private final ProductLocalizationMapper productLocalizationMapper;
+    private final MediaService mediaService;
 
     /*------------------------------------------------------------------------------------------------------------------
                                                 Product CRUD operations
@@ -40,14 +44,18 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO create(ProductDTO dto) {
+    public ProductDTO create(ProductDTO dto, MultipartFile coverImage, MultipartFile backImage) {
         if (dto == null)
             throw new IllegalArgumentException("Product create dto is null");
 
         Product product = productRepository.save(productMapper.mapToEntity(dto));
 
-        /*-- Create product minimal localizations when creating a product --*/
+        /*-- Create product localizations --*/
         createLocalizations(product);
+
+        /*-- Create product medias --*/
+         mediaService.create(coverImage, product.getId(), MediaCategoryEnum.PRODUCT_COVER);
+         mediaService.create(backImage, product.getId(), MediaCategoryEnum.PRODUCT_BACK);
 
         return productMapper.mapToDto(product);
     }
@@ -89,12 +97,13 @@ public class ProductService {
 
     @Transactional
     public void createLocalizations(Product product) {
-        for (LanguageEnum language : LanguageEnum.values()) {
+        for (ProductLocalization productLocalization : product.getLocalizations()) {
             ProductLocalization localization = ProductLocalization.builder()
                     .product(product)
-                    .language(language)
-                    .name(language.name() + " " + product.getId())
-                    .isActive(false)
+                    .language(productLocalization.getLanguage())
+                    .name(productLocalization.getName())
+                    .description(productLocalization.getDescription())
+                    .isActive(true)
                     .build();
             productLocalizationRepository.save(localization);
         }

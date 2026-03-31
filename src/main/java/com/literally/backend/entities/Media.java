@@ -1,6 +1,6 @@
 package com.literally.backend.entities;
 
-import com.literally.backend.enums.EntityTypeEnum;
+import com.literally.backend.enums.MediaCategoryEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class Media {
     private UUID entityId;
 
     @Enumerated(EnumType.STRING)
-    private EntityTypeEnum entityType;
+    private MediaCategoryEnum category;
 
     @Lob
     private byte[] data;
