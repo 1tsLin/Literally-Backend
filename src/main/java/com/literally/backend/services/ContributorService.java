@@ -32,11 +32,9 @@ public class ContributorService {
         return contributorMapper.mapToDto(contributor);
     }
 
-    public ContributorDTO getByIdAndCategory(UUID contributorId, ContributorCategoryEnum category){
-        Contributor contributor = contributorRepository.findByIdAndCategory(contributorId, category)
+    public Contributor getByIdAndCategory(UUID contributorId, ContributorCategoryEnum category){
+        return contributorRepository.findByIdAndCategory(contributorId, category)
                 .orElseThrow(() -> new RuntimeException("Contributor not found : " + contributorId));
-
-        return contributorMapper.mapToDto(contributor);
     }
 
     public List<ContributorDTO> getContributors(ContributorFilter filter) {

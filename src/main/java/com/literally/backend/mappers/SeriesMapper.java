@@ -39,12 +39,9 @@ public class SeriesMapper {
                 .audience(dto.getAudience())
                 .genres(new ArrayList<>(dto.getGenres()))
 
-                .author(contributorMapper.mapToEntity(
-                        contributorService.getByIdAndCategory(dto.getAuthorId(), ContributorCategoryEnum.AUTHOR)))
-                .editor(contributorMapper.mapToEntity(
-                        contributorService.getByIdAndCategory(dto.getEditorId(), ContributorCategoryEnum.EDITOR)))
-                .illustrator(contributorMapper.mapToEntity(
-                        contributorService.getByIdAndCategory(dto.getIllustratorId(), ContributorCategoryEnum.ILLUSTRATOR)))
+                .author(contributorService.getByIdAndCategory(dto.getAuthorId(), ContributorCategoryEnum.AUTHOR))
+                .editor(contributorService.getByIdAndCategory(dto.getEditorId(), ContributorCategoryEnum.EDITOR))
+                .illustrator(contributorService.getByIdAndCategory(dto.getIllustratorId(), ContributorCategoryEnum.ILLUSTRATOR))
 
                 .build();
     }

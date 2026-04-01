@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,18 +45,20 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO create(ProductDTO dto, MultipartFile coverImage, MultipartFile backImage) {
+    public ProductDTO create(ProductDTO dto, MultipartFile coverImage, MultipartFile backImage) throws IOException {
         if (dto == null)
             throw new IllegalArgumentException("Product create dto is null");
+
+        System.out.println(dto);
 
         Product product = productRepository.save(productMapper.mapToEntity(dto));
 
         /*-- Create product localizations --*/
-        createLocalizations(product);
+        createLocalizations(product, dto.getLocalizations());
 
         /*-- Create product medias --*/
-         mediaService.create(coverImage, product.getId(), MediaCategoryEnum.PRODUCT_COVER);
-         mediaService.create(backImage, product.getId(), MediaCategoryEnum.PRODUCT_BACK);
+        if(coverImage != null && !coverImage.isEmpty()) mediaService.create(coverImage, product.getId(), MediaCategoryEnum.PRODUCT_COVER);
+        if(backImage != null && !backImage.isEmpty()) mediaService.create(backImage, product.getId(), MediaCategoryEnum.PRODUCT_BACK);
 
         return productMapper.mapToDto(product);
     }
@@ -96,8 +99,8 @@ public class ProductService {
     }
 
     @Transactional
-    public void createLocalizations(Product product) {
-        for (ProductLocalization productLocalization : product.getLocalizations()) {
+    public void createLocalizations(Product product, List<ProductLocalizationDTO> localizations) {
+        for (ProductLocalizationDTO productLocalization : localizations) {
             ProductLocalization localization = ProductLocalization.builder()
                     .product(product)
                     .language(productLocalization.getLanguage())
