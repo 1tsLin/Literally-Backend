@@ -8,8 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "medias")
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

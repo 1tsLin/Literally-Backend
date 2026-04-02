@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -186,6 +187,20 @@ public class ProductService {
             throw new IllegalArgumentException("Language is null while fetching catalog");
 
         // TODO : Add catalog filters
-        return productLocalizationRepository.findCatalogByLanguage(language);
+        return productLocalizationRepository.findCatalogByLanguage(language)
+            .stream()
+            .map(row -> {
+                ProductCatalogDTO dto = new ProductCatalogDTO();
+                dto.setProductId((UUID) row[0]);
+                dto.setPrice((BigDecimal) row[1]);
+                dto.setTitle((String) row[2]);
+                dto.setAuthorName((String) row[3]);
+                dto.setGrade(row[4] != null ? BigDecimal.valueOf(((Number) row[4]).doubleValue()) : BigDecimal.ZERO);
+                dto.setReviews(row[5] != null ? ((Number) row[5]).intValue() : 0);
+                dto.setIsFavorite(false);
+                dto.setCoverId((UUID) row[6]);
+                return dto;
+            })
+            .toList();
     }
 }

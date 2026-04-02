@@ -1,6 +1,5 @@
 package com.literally.backend.dtos;
 
-import com.literally.backend.entities.Media;
 import com.literally.backend.enums.BookAudienceEnum;
 import com.literally.backend.enums.BookFormatEnum;
 import com.literally.backend.enums.BookGenreEnum;
