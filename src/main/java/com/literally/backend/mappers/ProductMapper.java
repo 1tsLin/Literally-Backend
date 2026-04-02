@@ -3,6 +3,7 @@ package com.literally.backend.mappers;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.entities.Product;
+import com.literally.backend.entities.ProductLocalization;
 import com.literally.backend.entities.Review;
 import com.literally.backend.enums.ContributorCategoryEnum;
 import com.literally.backend.services.ContributorService;
@@ -18,8 +19,8 @@ import java.util.stream.Collectors;
 public class ProductMapper {
 
     private final SeriesMapper seriesMapper;
-    private final ContributorMapper contributorMapper;
     private final ContributorService contributorService;
+    private final ProductLocalizationMapper productLocalizationMapper;
 
     public ProductDTO mapToDto(Product entity) {
         return ProductDTO.builder()
@@ -83,5 +84,29 @@ public class ProductMapper {
                 .weight(dto.getWeight())
 
                 .build();
+    }
+
+    public void updateFromDto(ProductDTO dto, Product entity){
+        entity.setAlias(dto.getAlias());
+        entity.setFormat(dto.getFormat());
+        entity.setAudience(dto.getAudience());
+        entity.setGenres(dto.getGenres());
+
+        entity.setPrice(dto.getPrice());
+        entity.setQuantity(dto.getQuantity());
+        entity.setSales(dto.getSales());
+
+        entity.setAuthor(contributorService.getByIdAndCategory(dto.getAuthorId(), ContributorCategoryEnum.AUTHOR));
+        entity.setIllustrator(contributorService.getByIdAndCategory(dto.getIllustratorId(), ContributorCategoryEnum.ILLUSTRATOR));
+        entity.setEditor(contributorService.getByIdAndCategory(dto.getEditorId(), ContributorCategoryEnum.EDITOR));
+
+        entity.setEan(dto.getEan());
+        entity.setPages(dto.getPages());
+        entity.setPublishingDate(dto.getPublishingDate());
+
+        entity.setHeight(dto.getHeight());
+        entity.setWidth(dto.getWidth());
+        entity.setThickness(dto.getThickness());
+        entity.setWeight(dto.getWeight());
     }
 }

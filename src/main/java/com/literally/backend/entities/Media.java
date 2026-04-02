@@ -24,7 +24,7 @@ public class Media {
     @Enumerated(EnumType.STRING)
     private MediaCategoryEnum category;
 
-    @Lob
+    @Column(name = "data", columnDefinition = "bytea")
     private byte[] data;
 
 }

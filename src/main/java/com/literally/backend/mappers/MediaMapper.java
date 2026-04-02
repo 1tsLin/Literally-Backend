@@ -12,7 +12,6 @@ public class MediaMapper {
                 .id(entity.getId())
                 .entityId(entity.getEntityId())
                 .category(entity.getCategory())
-                .data(entity.getData())
                 .build();
     }
 
@@ -20,7 +19,11 @@ public class MediaMapper {
         return Media.builder()
                 .entityId(dto.getEntityId())
                 .category(dto.getCategory())
-                .data(dto.getData())
                 .build();
+    }
+
+    public void updateFromDto(MediaDTO dto, Media entity){
+        entity.setEntityId(dto.getEntityId());
+        entity.setCategory(dto.getCategory());
     }
 }

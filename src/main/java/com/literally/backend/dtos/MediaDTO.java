@@ -14,6 +14,4 @@ public class MediaDTO {
 
     private UUID entityId;
     private MediaCategoryEnum category;
-
-    private byte[] data;
 }

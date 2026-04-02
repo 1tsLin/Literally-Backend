@@ -3,7 +3,6 @@ package com.literally.backend.services;
 import com.literally.backend.dtos.ProductCatalogDTO;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
-import com.literally.backend.entities.Media;
 import com.literally.backend.entities.Product;
 import com.literally.backend.entities.ProductLocalization;
 import com.literally.backend.enums.LanguageEnum;
@@ -18,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,10 @@ public class ProductService {
     ------------------------------------------------------------------------------------------------------------------*/
 
     public ProductDTO getById(UUID productId) {
-        return productMapper.mapToDto(getProductById(productId));
+        ProductDTO product = productMapper.mapToDto(getProductById(productId));
+        product.setLocalizations(getLocalizations(product.getId()));
+        product.setMedias(mediaService.getByEntity(productId));
+        return product;
     }
 
     public Product getProductById(UUID productId) {
@@ -71,12 +75,16 @@ public class ProductService {
         if (!productRepository.existsById(productId))
             throw new RuntimeException("Product not found : " + productId);
 
-        Product product = productMapper.mapToEntity(dto);
-        product.setId(productId);
-
+        Product product = getProductById(productId);
+        productMapper.updateFromDto(dto, product);
         productRepository.save(product);
 
-        return productMapper.mapToDto(product);
+        updateLocalizations(productId, dto.getLocalizations());
+
+        ProductDTO productDTO = productMapper.mapToDto(product);
+        productDTO.setLocalizations(getLocalizations(product.getId()));
+        productDTO.setMedias(mediaService.getByEntity(productId));
+        return productDTO;
     }
 
     @Transactional
@@ -90,6 +98,14 @@ public class ProductService {
     /*------------------------------------------------------------------------------------------------------------------
                                               Product localization CRUD operations
     ------------------------------------------------------------------------------------------------------------------*/
+
+    public List<ProductLocalizationDTO> getLocalizations(UUID productId){
+        List<ProductLocalization> localizations = productLocalizationRepository.findAllByProductId(productId);
+        if(localizations == null){
+            throw new RuntimeException("Product " + productId + " localization not found");
+        }
+        return localizations.stream().map(productLocalizationMapper::mapToDto).collect(Collectors.toList());
+    }
 
     public ProductLocalizationDTO getLocalization(UUID productId, LanguageEnum language) {
         ProductLocalization localization = productLocalizationRepository.findByProductIdAndLanguage(productId, language);
@@ -113,16 +129,49 @@ public class ProductService {
     }
 
     @Transactional
+    public void updateLocalizations(UUID productId, List<ProductLocalizationDTO> dtos){
+        List<ProductLocalization> localizations = productLocalizationRepository.findAllByProductId(productId);
+        if(localizations == null){
+            throw new RuntimeException("Product " + productId + " localization not found");
+        }
+
+        List<ProductLocalizationDTO> result = new ArrayList<>();
+
+        for (ProductLocalizationDTO dto : dtos) {
+            ProductLocalization localization = localizations.stream()
+                    .filter(l -> l.getLanguage() == dto.getLanguage())
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException(
+                            "No localization found for language " + dto.getLanguage()
+                    ));
+
+            result.add(updateLocalization(localization, dto));
+        }
+    }
+
+    @Transactional
+    public ProductLocalizationDTO updateLocalization(ProductLocalization localization, ProductLocalizationDTO dto) {
+        if (dto == null)
+            throw new IllegalArgumentException("Product localization update dto is null");
+
+        if (localization == null)
+            throw new RuntimeException("Product localization is null");
+
+        productLocalizationMapper.updateFromDto(dto, localization);
+        productLocalizationRepository.save(localization);
+
+        return productLocalizationMapper.mapToDto(localization);
+    }
+
+    @Transactional
     public ProductLocalizationDTO updateLocalization(UUID localizationId, ProductLocalizationDTO dto) {
         if (dto == null)
             throw new IllegalArgumentException("Product localization update dto is null");
 
-        if (!productLocalizationRepository.existsById(localizationId))
-            throw new RuntimeException("Product localization not found : " + localizationId);
+        ProductLocalization localization = productLocalizationRepository.findById(localizationId)
+                .orElseThrow(() -> new RuntimeException("Product localization not found: " + localizationId));
 
-        ProductLocalization localization = productLocalizationMapper.mapToEntity(dto);
-        localization.setId(localizationId);
-
+        productLocalizationMapper.updateFromDto(dto, localization);
         productLocalizationRepository.save(localization);
 
         return productLocalizationMapper.mapToDto(localization);

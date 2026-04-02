@@ -11,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface MediaRepository extends JpaRepository<Media, UUID> {
 
-    List<Media> findByEntityIdAndCategory(UUID entityId, MediaCategoryEnum category);
+    List<Media> findByEntityId(UUID entityId);
 }

@@ -27,4 +27,10 @@ public class ProductLocalizationMapper {
                 .isActive(dto.getIsActive())
                 .build();
     }
+
+    public void updateFromDto(ProductLocalizationDTO dto, ProductLocalization entity){
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setIsActive(dto.getIsActive());
+    }
 }

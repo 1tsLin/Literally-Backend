@@ -16,6 +16,8 @@ public interface ProductLocalizationRepository extends JpaRepository<ProductLoca
 
     ProductLocalization findByProductIdAndLanguage(UUID productId, LanguageEnum language);
 
+    List<ProductLocalization> findAllByProductId(UUID productId);
+
     @Query("""
                 select new com.literally.backend.dtos.ProductCatalogDTO(
                     product.id,
