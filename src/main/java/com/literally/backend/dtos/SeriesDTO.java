@@ -8,9 +8,10 @@ import lombok.*;
 
 import java.util.*;
 
-@Getter
-@Setter
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SeriesDTO {
     private UUID id;
 
@@ -19,7 +20,7 @@ public class SeriesDTO {
     private BookAudienceEnum audience;
     private List<BookGenreEnum> genres = new ArrayList<>();
 
-    private Contributor author;
-    private Contributor editor;
-    private Contributor illustrator;
+    private UUID authorId;
+    private UUID editorId;
+    private UUID illustratorId;
 }

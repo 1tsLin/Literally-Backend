@@ -1,15 +1,12 @@
-package com.literally.backend.dtos;
+package com.literally.backend.filters;
 
 import com.literally.backend.enums.ContributorCategoryEnum;
-import lombok.*;
+import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ContributorDTO {
+public class ContributorFilter {
     private UUID id;
     private ContributorCategoryEnum category;
     private String name;

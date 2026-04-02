@@ -1,17 +1,16 @@
 package com.literally.backend.dtos;
 
 import com.literally.backend.enums.OrderStatusEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDTO {
     private UUID id;
 

@@ -6,8 +6,11 @@ import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.enums.LanguageEnum;
 import com.literally.backend.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,9 +39,11 @@ public class ProductController {
         return productService.getById(productId);
     }
 
-    @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO dto) {
-        return productService.create(dto);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductDTO createProduct(@RequestPart("dto") ProductDTO dto,
+                                    @RequestPart(value = "coverImage", required = false) MultipartFile coverImage,
+                                    @RequestPart(value = "backImage", required = false) MultipartFile backImage) throws IOException {
+        return productService.create(dto, coverImage, backImage);
     }
 
     @PutMapping("/{productId}")

@@ -11,16 +11,19 @@ public class MediaMapper {
         return MediaDTO.builder()
                 .id(entity.getId())
                 .entityId(entity.getEntityId())
-                .entityType(entity.getEntityType())
-                .data(entity.getData())
+                .category(entity.getCategory())
                 .build();
     }
 
     public Media mapToEntity(MediaDTO dto){
         return Media.builder()
                 .entityId(dto.getEntityId())
-                .entityType(dto.getEntityType())
-                .data(dto.getData())
+                .category(dto.getCategory())
                 .build();
+    }
+
+    public void updateFromDto(MediaDTO dto, Media entity){
+        entity.setEntityId(dto.getEntityId());
+        entity.setCategory(dto.getCategory());
     }
 }

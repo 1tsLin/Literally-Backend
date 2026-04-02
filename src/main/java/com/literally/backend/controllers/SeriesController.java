@@ -1,10 +1,13 @@
 package com.literally.backend.controllers;
 
 import com.literally.backend.dtos.SeriesDTO;
+import com.literally.backend.dtos.SeriesLocalizationDTO;
+import com.literally.backend.filters.SeriesFilter;
 import com.literally.backend.services.SeriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -36,5 +39,14 @@ public class SeriesController {
     @DeleteMapping("/{seriesId}")
     public void deleteSeries(@PathVariable UUID seriesId) {
         seriesService.delete(seriesId);
+    }
+
+    /*------------------------------------------------------------------------------------------------------------------
+                                               Series localizations CRUD operations
+    ------------------------------------------------------------------------------------------------------------------*/
+
+    @GetMapping()
+    public List<SeriesLocalizationDTO> SeriesLocalizationDTO(SeriesFilter filter){
+        return seriesService.getSeriesLocalizations(filter);
     }
 }
