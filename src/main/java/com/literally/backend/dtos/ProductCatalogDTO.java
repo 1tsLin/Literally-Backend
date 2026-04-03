@@ -15,28 +15,8 @@ public class ProductCatalogDTO {
     private BigDecimal price;
     private String title;
     private String authorName;
-    private BigDecimal grade;
-    private Integer reviews;
+    private Double grade;
+    private Long reviews;
     private Boolean isFavorite;
     private UUID coverId;
-
-    public ProductCatalogDTO(
-            UUID productId,
-            BigDecimal price,
-            String title,
-            String authorName,
-            Integer grade,
-            Long reviews,
-            boolean isFavorite,
-            UUID coverId
-    ) {
-        this.productId = productId;
-        this.price = price;
-        this.title = title;
-        this.authorName = authorName;
-        this.grade = BigDecimal.valueOf(grade);
-        this.reviews = reviews != null ? reviews.intValue() : 0;
-        this.isFavorite = isFavorite;
-        this.coverId = coverId;
-    }
 }

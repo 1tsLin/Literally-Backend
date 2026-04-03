@@ -27,6 +27,7 @@ public class ProductLocalization {
 
     private String name;
 
+    @Column(name = "description", length = 1024)
     private String description;
 
     private Boolean isActive;

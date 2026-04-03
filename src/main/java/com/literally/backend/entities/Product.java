@@ -55,7 +55,7 @@ public class Product {
     @JoinColumn(name = "illustrator_id")
     private Contributor illustrator;
 
-    private Integer ean;
+    private Long ean;
 
     private Integer pages;
 

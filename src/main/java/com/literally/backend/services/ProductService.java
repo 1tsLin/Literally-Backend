@@ -7,8 +7,10 @@ import com.literally.backend.entities.Product;
 import com.literally.backend.entities.ProductLocalization;
 import com.literally.backend.enums.LanguageEnum;
 import com.literally.backend.enums.MediaCategoryEnum;
+import com.literally.backend.filters.CatalogFilter;
 import com.literally.backend.mappers.ProductLocalizationMapper;
 import com.literally.backend.mappers.ProductMapper;
+import com.literally.backend.repositories.ProductCatalogRepository;
 import com.literally.backend.repositories.ProductLocalizationRepository;
 import com.literally.backend.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductLocalizationMapper productLocalizationMapper;
     private final MediaService mediaService;
+    private final ProductCatalogRepository productCatalogRepository;
 
     /*------------------------------------------------------------------------------------------------------------------
                                                 Product CRUD operations
@@ -182,25 +185,11 @@ public class ProductService {
                                               Product localization CRUD operations
     ------------------------------------------------------------------------------------------------------------------*/
 
-    public List<ProductCatalogDTO> getCatalogByLanguage(LanguageEnum language) {
+    public List<ProductCatalogDTO> getCatalogByLanguage(LanguageEnum language, CatalogFilter filters) {
         if (language == null)
             throw new IllegalArgumentException("Language is null while fetching catalog");
 
         // TODO : Add catalog filters
-        return productLocalizationRepository.findCatalogByLanguage(language)
-            .stream()
-            .map(row -> {
-                ProductCatalogDTO dto = new ProductCatalogDTO();
-                dto.setProductId((UUID) row[0]);
-                dto.setPrice((BigDecimal) row[1]);
-                dto.setTitle((String) row[2]);
-                dto.setAuthorName((String) row[3]);
-                dto.setGrade(row[4] != null ? BigDecimal.valueOf(((Number) row[4]).doubleValue()) : BigDecimal.ZERO);
-                dto.setReviews(row[5] != null ? ((Number) row[5]).intValue() : 0);
-                dto.setIsFavorite(false);
-                dto.setCoverId((UUID) row[6]);
-                return dto;
-            })
-            .toList();
+        return productCatalogRepository.getCatalog(language, filters);
     }
 }

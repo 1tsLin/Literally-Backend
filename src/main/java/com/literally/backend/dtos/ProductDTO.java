@@ -29,7 +29,7 @@ public class ProductDTO {
     private UUID editorId;
     private UUID illustratorId;
 
-    private Integer ean;
+    private Long ean;
     private Integer pages;
     private Date publishingDate;
 

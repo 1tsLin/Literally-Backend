@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-public class ProductCatalogFilter {
+public class CatalogFilter {
     private String title;
     private BigDecimal price;
     private BigDecimal grade;
@@ -19,7 +19,7 @@ public class ProductCatalogFilter {
 
     private UUID authorId;
     private UUID illustratorId;
-    private UUID editorID;
+    private UUID editorId;
 
     private BookFormatEnum[] formats;
     private BookAudienceEnum[] audiences;

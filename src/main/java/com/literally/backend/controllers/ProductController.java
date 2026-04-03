@@ -4,6 +4,7 @@ import com.literally.backend.dtos.ProductCatalogDTO;
 import com.literally.backend.dtos.ProductDTO;
 import com.literally.backend.dtos.ProductLocalizationDTO;
 import com.literally.backend.enums.LanguageEnum;
+import com.literally.backend.filters.CatalogFilter;
 import com.literally.backend.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,8 +27,8 @@ public class ProductController {
     ------------------------------------------------------------------------------------------------------------------*/
 
     @GetMapping()
-    public List<ProductCatalogDTO> getCatalog(@RequestParam("language") LanguageEnum language) {
-        return productService.getCatalogByLanguage(language);
+    public List<ProductCatalogDTO> getCatalog(@RequestParam("language") LanguageEnum language, CatalogFilter filters) {
+        return productService.getCatalogByLanguage(language, filters);
     }
 
     /*------------------------------------------------------------------------------------------------------------------
