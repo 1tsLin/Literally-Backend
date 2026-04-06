@@ -1,6 +1,7 @@
 package com.literally.backend.repositories;
 
 import com.literally.backend.dtos.ProductCatalogDTO;
+import com.literally.backend.enums.BookGenreEnum;
 import com.literally.backend.enums.LanguageEnum;
 import com.literally.backend.filters.CatalogFilter;
 import jakarta.persistence.EntityManager;
@@ -8,6 +9,7 @@ import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,8 @@ public class ProductCatalogRepository {
             from ProductLocalization localization
             join localization.product product
             join Contributor contributor on contributor.id = product.author.id
+            left join Contributor illustrator on illustrator.id = product.illustrator.id
+            left join Contributor editor on editor.id = product.editor.id
             left join Review review on review.product.id = product.id
             left join Media media
                 on media.entityId = product.id
@@ -73,8 +77,12 @@ public class ProductCatalogRepository {
             params.put("formats", List.of(filters.getFormats()));
         }
         if (filters.getGenres() != null && filters.getGenres().length > 0) {
-            jpql.append(" and product.genre in :genres");
-            params.put("genres", List.of(filters.getGenres()));
+            jpql.append(" and product.genres in :genres");
+            params.put("genres", Arrays.asList(filters.getGenres()));
+        }
+        if (filters.getAudiences() != null && filters.getAudiences().length > 0) {
+            jpql.append(" and product.audience in :audiences");
+            params.put("audiences", List.of(filters.getAudiences()));
         }
 
         jpql.append("""

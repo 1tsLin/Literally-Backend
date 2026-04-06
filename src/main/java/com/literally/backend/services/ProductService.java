@@ -189,7 +189,6 @@ public class ProductService {
         if (language == null)
             throw new IllegalArgumentException("Language is null while fetching catalog");
 
-        // TODO : Add catalog filters
         return productCatalogRepository.getCatalog(language, filters);
     }
 }
