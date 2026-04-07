@@ -1,19 +1,22 @@
 package com.literally.backend.entities;
 
-import com.literally.backend.entities.composite_keys.CartItemKey;
+import com.literally.backend.entities.composite_keys.FavoriteKey;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "favorites")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItem {
+public class Favorite {
 
     @EmbeddedId
-    CartItemKey id;
+    FavoriteKey id;
 
     @ManyToOne
     @MapsId("userId")
@@ -24,7 +27,5 @@ public class CartItem {
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
-
-    private Integer quantity;
 
 }

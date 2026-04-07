@@ -7,8 +7,10 @@ import com.literally.backend.entities.Product;
 import com.literally.backend.entities.ProductLocalization;
 import com.literally.backend.enums.LanguageEnum;
 import com.literally.backend.enums.MediaCategoryEnum;
+import com.literally.backend.filters.CatalogFilter;
 import com.literally.backend.mappers.ProductLocalizationMapper;
 import com.literally.backend.mappers.ProductMapper;
+import com.literally.backend.repositories.ProductCatalogRepository;
 import com.literally.backend.repositories.ProductLocalizationRepository;
 import com.literally.backend.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +34,7 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final ProductLocalizationMapper productLocalizationMapper;
     private final MediaService mediaService;
+    private final ProductCatalogRepository productCatalogRepository;
 
     /*------------------------------------------------------------------------------------------------------------------
                                                 Product CRUD operations
@@ -181,11 +185,10 @@ public class ProductService {
                                               Product localization CRUD operations
     ------------------------------------------------------------------------------------------------------------------*/
 
-    public List<ProductCatalogDTO> getCatalogByLanguage(LanguageEnum language) {
+    public List<ProductCatalogDTO> getCatalogByLanguage(LanguageEnum language, CatalogFilter filters) {
         if (language == null)
             throw new IllegalArgumentException("Language is null while fetching catalog");
 
-        // TODO : Add catalog filters
-        return productLocalizationRepository.findCatalogByLanguage(language);
+        return productCatalogRepository.getCatalog(language, filters);
     }
 }

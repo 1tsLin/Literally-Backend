@@ -1,6 +1,5 @@
 package com.literally.backend.dtos;
 
-import com.literally.backend.entities.Media;
 import com.literally.backend.enums.BookAudienceEnum;
 import com.literally.backend.enums.BookFormatEnum;
 import com.literally.backend.enums.BookGenreEnum;
@@ -30,7 +29,7 @@ public class ProductDTO {
     private UUID editorId;
     private UUID illustratorId;
 
-    private Integer ean;
+    private Long ean;
     private Integer pages;
     private Date publishingDate;
 
