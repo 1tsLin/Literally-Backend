@@ -10,6 +10,8 @@ import java.util.UUID;
 
 @Data
 public class CatalogFilter {
+    private UUID[] productIds;
+
     private String title;
     private BigDecimal price;
     private BigDecimal grade;

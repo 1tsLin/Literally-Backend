@@ -84,6 +84,10 @@ public class ProductCatalogRepository {
             jpql.append(" and product.audience in :audiences");
             params.put("audiences", List.of(filters.getAudiences()));
         }
+        if (filters.getProductIds() != null && filters.getProductIds().length > 0) {
+            jpql.append(" and product.id in :productIds");
+            params.put("productIds", List.of(filters.getProductIds()));
+        }
 
         jpql.append("""
              group by
